@@ -12,7 +12,7 @@ public class War {
 	public static void main(String[] args) {
 		new War(new Random(), true).execute();
 	}
-	
+
 	// Benchmark
 	/*public static void main(String[] args) {
 		Random random = new Random();
@@ -30,21 +30,25 @@ public class War {
 		}
 	}*/
 	
-	private Deck deckDealer = new Deck();
+	private static Deck deckDealerTemplate = new Deck();
+	static {
+		deckDealerTemplate.fill();
+	}
+
+	private Deck deckDealer = deckDealerTemplate.clone();
 	private Deck deckOne = new Deck();
 	private Deck deckTwo = new Deck();
 	private Deck deckOneRisk = new Deck();
 	private Deck deckTwoRisk = new Deck();
 	private Random random;
 	private boolean debug;
-	
+
 	public War(Random random, boolean debug) {
 		this.random = random;
 		this.debug = debug;
 	}
-	
+
 	public void execute() {
-		deckDealer.fill();
 		deckDealer.shuffle(this.random);
 		if(this.debug) System.out.println("Original Dealer Shuffled: " + deckDealer.toString());
 
