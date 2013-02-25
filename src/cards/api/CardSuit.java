@@ -2,7 +2,7 @@ package cards.api;
 
 public enum CardSuit {
 	
-	CLUB("♠"),
+	CLUB("♣"),
 	DIAMOND("♥"),
 	HEART("♦"),
 	SPADE("♠");
