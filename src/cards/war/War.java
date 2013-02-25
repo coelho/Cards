@@ -9,7 +9,7 @@ import cards.api.TypeCardComparator;
 public class War {
 	
 	public static void main(String[] args) {
-		new War();
+		new War().execute();
 	}
 	
 	private SecureRandom random = new SecureRandom();
@@ -84,9 +84,9 @@ public class War {
 		}
 		System.out.println("----------------------------------------------------------");
 		if(deckOne.isEmpty()) {
-			System.out.println("Deck Two has succeded in war: " + deckTwo.toString());
+			System.out.println("Deck Two has succeeded in war: " + deckTwo.toString());
 		} else if(deckTwo.isEmpty()) {
-			System.out.println("Deck One has succeded in war: " + deckOne.toString());
+			System.out.println("Deck One has succeeded in war: " + deckOne.toString());
 		} else {
 			throw new RuntimeException();
 		}
