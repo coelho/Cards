@@ -1,6 +1,6 @@
 package cards.war;
 
-import java.security.SecureRandom;
+import java.util.Random;
 
 import cards.api.Card;
 import cards.api.Deck;
@@ -8,26 +8,50 @@ import cards.api.TypeCardComparator;
 
 public class War {
 
+	// Play a Game
 	public static void main(String[] args) {
-		new War().execute();
+		new War(new Random(), true).execute();
 	}
-
-	private SecureRandom random = new SecureRandom();
+	
+	// Benchmark
+	/*public static void main(String[] args) {
+		Random random = new Random();
+		long startTime = System.currentTimeMillis();
+		int amount = 0;
+		while(true) {
+			new War(random, false).execute();
+			amount++;
+			if(System.currentTimeMillis() - startTime < 1000L) {
+				continue;
+			}
+			System.out.println(amount + " Games/s");
+			startTime = System.currentTimeMillis();
+			amount = 0;
+		}
+	}*/
+	
 	private Deck deckDealer = new Deck();
 	private Deck deckOne = new Deck();
 	private Deck deckTwo = new Deck();
 	private Deck deckOneRisk = new Deck();
 	private Deck deckTwoRisk = new Deck();
-
+	private Random random;
+	private boolean debug;
+	
+	public War(Random random, boolean debug) {
+		this.random = random;
+		this.debug = debug;
+	}
+	
 	public void execute() {
 		deckDealer.fill();
-		deckDealer.shuffle(random);
-		System.out.println("Original Dealer Shuffled: " + deckDealer.toString());
+		deckDealer.shuffle(this.random);
+		if(this.debug) System.out.println("Original Dealer Shuffled: " + deckDealer.toString());
 
 		deckDealer.dealTop(deckOne, deckTwo);
-		System.out.println("Original Deck One: " + deckOne.toString());
-		System.out.println("Original Deck Two: " + deckTwo.toString());
-		System.out.println("----------------------------------------------------------");
+		if(this.debug) System.out.println("Original Deck One: " + deckOne.toString());
+		if(this.debug) System.out.println("Original Deck Two: " + deckTwo.toString());
+		if(this.debug) System.out.println("----------------------------------------------------------");
 		while(!deckOne.isEmpty() && !deckTwo.isEmpty()) {
 			Card card1 = deckOne.removeTop();
 			Card card2 = deckTwo.removeTop();
@@ -36,22 +60,22 @@ public class War {
 			if(comparison == 1) {
 				// show the risk, and deal it, if there is any
 				if(deckOneRisk.isEmpty() && deckTwoRisk.isEmpty()) {
-					System.out.println(card1.toString() + " vs " + card2.toString() + ": Deck One wins the battle!");
+					if(this.debug) System.out.println(card1.toString() + " vs " + card2.toString() + ": Deck One wins the battle!");
 				} else {
-					System.out.println(card1.toString() + " (" + deckOneRisk.toString() + ") vs " + card2.toString() + " (" + deckTwoRisk.toString() + "): Deck One wins the battle!");
+					if(this.debug) System.out.println(card1.toString() + " (" + deckOneRisk.toString() + ") vs " + card2.toString() + " (" + deckTwoRisk.toString() + "): Deck One wins the battle!");
 					deckOneRisk.dealBottom(deckOne);
 					deckTwoRisk.dealBottom(deckOne);
 				}
 				// give the cards to the winner
-				deckOne.putBottom(card2);
 				deckOne.putBottom(card1);
+				deckOne.putBottom(card2);
 			// if the comparison is in deckTwo's favor
 			} else if(comparison == -1) {
 				// show the risk, and deal it, if there is any
 				if(deckOneRisk.isEmpty() && deckTwoRisk.isEmpty()) {
-					System.out.println(card1.toString() + " vs " + card2.toString() + ": Deck Two wins the battle!");
+					if(this.debug) System.out.println(card1.toString() + " vs " + card2.toString() + ": Deck Two wins the battle!");
 				} else {
-					System.out.println(card1.toString() + " (" + deckOneRisk.toString() + ") vs " + card2.toString() + " (" + deckTwoRisk.toString() + "): Deck Two wins the battle!");
+					if(this.debug) System.out.println(card1.toString() + " (" + deckOneRisk.toString() + ") vs " + card2.toString() + " (" + deckTwoRisk.toString() + "): Deck Two wins the battle!");
 					deckOneRisk.dealBottom(deckTwo);
 					deckTwoRisk.dealBottom(deckTwo);
 				}
@@ -62,9 +86,9 @@ public class War {
 			} else if(comparison == 0) {
 				// show the risk if there is any
 				if(deckOneRisk.isEmpty() && deckTwoRisk.isEmpty()) {
-					System.out.println(card1.toString() + " vs " + card2.toString() + ": Clash!");
+					if(this.debug) System.out.println(card1.toString() + " vs " + card2.toString() + ": Clash!");
 				} else {
-					System.out.println(card1.toString() + " (" + deckOneRisk.toString() + ") vs " + card2.toString() + " (" + deckTwoRisk.toString() + "): Clash!");
+					if(this.debug) System.out.println(card1.toString() + " (" + deckOneRisk.toString() + ") vs " + card2.toString() + " (" + deckTwoRisk.toString() + "): Clash!");
 				}
 				// create a risk for the next hand
 				deckOneRisk.putBottom(card1);
@@ -82,11 +106,11 @@ public class War {
 				}
 			}
 		}
-		System.out.println("----------------------------------------------------------");
+		if(this.debug) System.out.println("----------------------------------------------------------");
 		if(deckOne.isEmpty()) {
-			System.out.println("Deck Two has succeeded in war: " + deckTwo.toString());
+			if(this.debug) System.out.println("Deck Two has succeeded in war: " + deckTwo.toString());
 		} else if(deckTwo.isEmpty()) {
-			System.out.println("Deck One has succeeded in war: " + deckOne.toString());
+			if(this.debug) System.out.println("Deck One has succeeded in war: " + deckOne.toString());
 		} else {
 			throw new RuntimeException();
 		}
