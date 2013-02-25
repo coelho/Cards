@@ -9,12 +9,12 @@ import cards.api.TypeCardComparator;
 public class War {
 
 	// Play a Game
-	public static void main(String[] args) {
-		new War(new Random(), true).execute();
-	}
+	//public static void main(String[] args) {
+	//	new War(new Random(), true).execute();
+	//}
 
 	// Benchmark
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		Random random = new Random();
 		long startTime = System.currentTimeMillis();
 		int amount = 0;
@@ -28,14 +28,9 @@ public class War {
 			startTime = System.currentTimeMillis();
 			amount = 0;
 		}
-	}*/
-	
-	private static Deck deckDealerTemplate = new Deck();
-	static {
-		deckDealerTemplate.fill();
 	}
 
-	private Deck deckDealer = deckDealerTemplate.clone();
+	private Deck deckDealer = new Deck();
 	private Deck deckOne = new Deck();
 	private Deck deckTwo = new Deck();
 	private Deck deckOneRisk = new Deck();
@@ -49,6 +44,7 @@ public class War {
 	}
 
 	public void execute() {
+		deckDealer.fill();
 		deckDealer.shuffle(this.random);
 		if(this.debug) System.out.println("Original Dealer Shuffled: " + deckDealer.toString());
 
