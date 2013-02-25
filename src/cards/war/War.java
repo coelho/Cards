@@ -7,23 +7,23 @@ import cards.api.Deck;
 import cards.api.TypeCardComparator;
 
 public class War {
-	
+
 	public static void main(String[] args) {
 		new War().execute();
 	}
-	
+
 	private SecureRandom random = new SecureRandom();
 	private Deck deckDealer = new Deck();
 	private Deck deckOne = new Deck();
 	private Deck deckTwo = new Deck();
 	private Deck deckOneRisk = new Deck();
 	private Deck deckTwoRisk = new Deck();
-	
+
 	public void execute() {
 		deckDealer.fill();
 		deckDealer.shuffle(random);
 		System.out.println("Original Dealer Shuffled: " + deckDealer.toString());
-		
+
 		deckDealer.dealTop(deckOne, deckTwo);
 		System.out.println("Original Deck One: " + deckOne.toString());
 		System.out.println("Original Deck Two: " + deckTwo.toString());
@@ -43,8 +43,8 @@ public class War {
 					deckTwoRisk.dealBottom(deckOne);
 				}
 				// give the cards to the winner
-				deckOne.putBottom(card1);
 				deckOne.putBottom(card2);
+				deckOne.putBottom(card1);
 			// if the comparison is in deckTwo's favor
 			} else if(comparison == -1) {
 				// show the risk, and deal it, if there is any
@@ -56,8 +56,8 @@ public class War {
 					deckTwoRisk.dealBottom(deckTwo);
 				}
 				// give the cards to the winner
-				deckTwo.putBottom(card1);
 				deckTwo.putBottom(card2);
+				deckTwo.putBottom(card1);
 			// if the comparison is neutral
 			} else if(comparison == 0) {
 				// show the risk if there is any
@@ -91,5 +91,5 @@ public class War {
 			throw new RuntimeException();
 		}
 	}
-	
+
 }
