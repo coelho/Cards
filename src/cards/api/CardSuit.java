@@ -3,8 +3,8 @@ package cards.api;
 public enum CardSuit {
 	
 	CLUB("♣"),
-	DIAMOND("♥"),
-	HEART("♦"),
+	DIAMOND("♦"),
+	HEART("♥"),
 	SPADE("♠");
 	
 	private String representation;

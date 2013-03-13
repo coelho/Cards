@@ -5,16 +5,17 @@ import java.util.Random;
 import cards.api.Card;
 import cards.api.Deck;
 import cards.api.TypeCardComparator;
+import cards.api.TypeSuitCardComparator;
 
 public class War {
 
 	// Play a Game
-	//public static void main(String[] args) {
-	//	new War(new Random(), true).execute();
-	//}
+	public static void main(String[] args) {
+		new War(new Random(), true).execute();
+	}
 
 	// Benchmark
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		Random random = new Random();
 		long startTime = System.currentTimeMillis();
 		int amount = 0;
@@ -28,7 +29,7 @@ public class War {
 			startTime = System.currentTimeMillis();
 			amount = 0;
 		}
-	}
+	}*/
 
 	private Deck deckDealer = new Deck();
 	private Deck deckOne = new Deck();
@@ -55,7 +56,7 @@ public class War {
 		while(!deckOne.isEmpty() && !deckTwo.isEmpty()) {
 			Card card1 = deckOne.removeTop();
 			Card card2 = deckTwo.removeTop();
-			int comparison = card1.compare(card2, TypeCardComparator.instance);
+			int comparison = card1.compare(card2, TypeSuitCardComparator.instance);
 			// if the comparison is in deckOne's favor
 			if(comparison == 1) {
 				// show the risk, and deal it, if there is any
