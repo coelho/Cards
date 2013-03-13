@@ -5,7 +5,6 @@ import java.util.Random;
 import cards.api.Card;
 import cards.api.Deck;
 import cards.api.TypeCardComparator;
-import cards.api.TypeSuitCardComparator;
 
 public class War {
 
@@ -56,7 +55,7 @@ public class War {
 		while(!deckOne.isEmpty() && !deckTwo.isEmpty()) {
 			Card card1 = deckOne.removeTop();
 			Card card2 = deckTwo.removeTop();
-			int comparison = card1.compare(card2, TypeSuitCardComparator.instance);
+			int comparison = card1.compare(card2, TypeCardComparator.instance);
 			// if the comparison is in deckOne's favor
 			if(comparison == 1) {
 				// show the risk, and deal it, if there is any
