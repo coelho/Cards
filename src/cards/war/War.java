@@ -8,28 +8,6 @@ import cards.api.TypeCardComparator;
 
 public class War {
 
-	// Play a Game
-	public static void main(String[] args) {
-		new War(new Random(), true).execute();
-	}
-
-	// Benchmark
-	/*public static void main(String[] args) {
-		Random random = new Random();
-		long startTime = System.currentTimeMillis();
-		int amount = 0;
-		while(true) {
-			new War(random, false).execute();
-			amount++;
-			if(System.currentTimeMillis() - startTime < 1000L) {
-				continue;
-			}
-			System.out.println(amount + " Games/s");
-			startTime = System.currentTimeMillis();
-			amount = 0;
-		}
-	}*/
-
 	private Deck deckDealer = new Deck();
 	private Deck deckOne = new Deck();
 	private Deck deckTwo = new Deck();
@@ -43,7 +21,7 @@ public class War {
 		this.debug = debug;
 	}
 
-	public void execute() {
+	public int execute() {
 		this.deckDealer.fill();
 		this.deckDealer.shuffle(this.random);
 		if(this.debug) System.out.println("Original Dealer Shuffled: " + this.deckDealer.toString());
@@ -109,11 +87,22 @@ public class War {
 		if(this.debug) System.out.println("----------------------------------------------------------");
 		if(this.deckOne.isEmpty()) {
 			if(this.debug) System.out.println("Deck Two has succeeded in war: " + this.deckTwo.toString());
+			this.cleanup();
+			return 2;
 		} else if(this.deckTwo.isEmpty()) {
 			if(this.debug) System.out.println("Deck One has succeeded in war: " + this.deckOne.toString());
-		} else {
-			throw new RuntimeException();
+			this.cleanup();
+			return 1;
 		}
+		throw new RuntimeException();
 	}
 
+	private void cleanup() {
+		this.deckDealer.empty();
+		this.deckOne.empty();
+		this.deckTwo.empty();
+		this.deckOneRisk.empty();
+		this.deckTwoRisk.empty();
+	}
+	
 }
