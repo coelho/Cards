@@ -10,7 +10,7 @@ public class Deck {
 	private List<Card> cards = new LinkedList<Card>();
 	
 	public Deck() {
-		
+		// blank
 	}
 	
 	public Deck(Deck deck) {

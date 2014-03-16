@@ -44,73 +44,73 @@ public class War {
 	}
 
 	public void execute() {
-		deckDealer.fill();
-		deckDealer.shuffle(this.random);
-		if(this.debug) System.out.println("Original Dealer Shuffled: " + deckDealer.toString());
+		this.deckDealer.fill();
+		this.deckDealer.shuffle(this.random);
+		if(this.debug) System.out.println("Original Dealer Shuffled: " + this.deckDealer.toString());
 
-		deckDealer.dealTop(deckOne, deckTwo);
-		if(this.debug) System.out.println("Original Deck One: " + deckOne.toString());
-		if(this.debug) System.out.println("Original Deck Two: " + deckTwo.toString());
+		this.deckDealer.dealTop(this.deckOne, this.deckTwo);
+		if(this.debug) System.out.println("Original Deck One: " + this.deckOne.toString());
+		if(this.debug) System.out.println("Original Deck Two: " + this.deckTwo.toString());
 		if(this.debug) System.out.println("----------------------------------------------------------");
-		while(!deckOne.isEmpty() && !deckTwo.isEmpty()) {
-			Card card1 = deckOne.removeTop();
-			Card card2 = deckTwo.removeTop();
+		while(!this.deckOne.isEmpty() && !this.deckTwo.isEmpty()) {
+			Card card1 = this.deckOne.removeTop();
+			Card card2 = this.deckTwo.removeTop();
 			int comparison = card1.compare(card2, TypeCardComparator.instance);
 			// if the comparison is in deckOne's favor
 			if(comparison == 1) {
 				// show the risk, and deal it, if there is any
-				if(deckOneRisk.isEmpty() && deckTwoRisk.isEmpty()) {
+				if(this.deckOneRisk.isEmpty() && this.deckTwoRisk.isEmpty()) {
 					if(this.debug) System.out.println(card1.toString() + " vs " + card2.toString() + ": Deck One wins the battle!");
 				} else {
-					if(this.debug) System.out.println(card1.toString() + " (" + deckOneRisk.toString() + ") vs " + card2.toString() + " (" + deckTwoRisk.toString() + "): Deck One wins the battle!");
-					deckOneRisk.dealBottom(deckOne);
-					deckTwoRisk.dealBottom(deckOne);
+					if(this.debug) System.out.println(card1.toString() + " (" + this.deckOneRisk.toString() + ") vs " + card2.toString() + " (" + this.deckTwoRisk.toString() + "): Deck One wins the battle!");
+					this.deckOneRisk.dealBottom(this.deckOne);
+					this.deckTwoRisk.dealBottom(this.deckOne);
 				}
 				// give the cards to the winner
-				deckOne.putBottom(card1);
-				deckOne.putBottom(card2);
+				this.deckOne.putBottom(card1);
+				this.deckOne.putBottom(card2);
 			// if the comparison is in deckTwo's favor
 			} else if(comparison == -1) {
 				// show the risk, and deal it, if there is any
-				if(deckOneRisk.isEmpty() && deckTwoRisk.isEmpty()) {
+				if(this.deckOneRisk.isEmpty() && this.deckTwoRisk.isEmpty()) {
 					if(this.debug) System.out.println(card1.toString() + " vs " + card2.toString() + ": Deck Two wins the battle!");
 				} else {
-					if(this.debug) System.out.println(card1.toString() + " (" + deckOneRisk.toString() + ") vs " + card2.toString() + " (" + deckTwoRisk.toString() + "): Deck Two wins the battle!");
-					deckOneRisk.dealBottom(deckTwo);
-					deckTwoRisk.dealBottom(deckTwo);
+					if(this.debug) System.out.println(card1.toString() + " (" + this.deckOneRisk.toString() + ") vs " + card2.toString() + " (" + this.deckTwoRisk.toString() + "): Deck Two wins the battle!");
+					this.deckOneRisk.dealBottom(this.deckTwo);
+					this.deckTwoRisk.dealBottom(this.deckTwo);
 				}
 				// give the cards to the winner
-				deckTwo.putBottom(card2);
-				deckTwo.putBottom(card1);
+				this.deckTwo.putBottom(card2);
+				this.deckTwo.putBottom(card1);
 			// if the comparison is neutral
 			} else if(comparison == 0) {
 				// show the risk if there is any
-				if(deckOneRisk.isEmpty() && deckTwoRisk.isEmpty()) {
+				if(this.deckOneRisk.isEmpty() && this.deckTwoRisk.isEmpty()) {
 					if(this.debug) System.out.println(card1.toString() + " vs " + card2.toString() + ": Clash!");
 				} else {
-					if(this.debug) System.out.println(card1.toString() + " (" + deckOneRisk.toString() + ") vs " + card2.toString() + " (" + deckTwoRisk.toString() + "): Clash!");
+					if(this.debug) System.out.println(card1.toString() + " (" + this.deckOneRisk.toString() + ") vs " + card2.toString() + " (" + this.deckTwoRisk.toString() + "): Clash!");
 				}
 				// create a risk for the next hand
-				deckOneRisk.putBottom(card1);
-				deckTwoRisk.putBottom(card2);
+				this.deckOneRisk.putBottom(card1);
+				this.deckTwoRisk.putBottom(card2);
 				int remaining = 3;
-				if(deckOne.getRemaining() <= remaining) {
-					remaining = deckOne.getRemaining() - 1;
+				if(this.deckOne.getRemaining() <= remaining) {
+					remaining = this.deckOne.getRemaining() - 1;
 				}
-				if(deckTwo.getRemaining() <= remaining) {
-					remaining = deckTwo.getRemaining() - 1;
+				if(this.deckTwo.getRemaining() <= remaining) {
+					remaining = this.deckTwo.getRemaining() - 1;
 				}
 				for(int i = 0; i < remaining; i++) {
-					deckOneRisk.putBottom(deckOne.removeTop());
-					deckTwoRisk.putBottom(deckTwo.removeTop());
+					this.deckOneRisk.putBottom(this.deckOne.removeTop());
+					this.deckTwoRisk.putBottom(this.deckTwo.removeTop());
 				}
 			}
 		}
 		if(this.debug) System.out.println("----------------------------------------------------------");
-		if(deckOne.isEmpty()) {
-			if(this.debug) System.out.println("Deck Two has succeeded in war: " + deckTwo.toString());
-		} else if(deckTwo.isEmpty()) {
-			if(this.debug) System.out.println("Deck One has succeeded in war: " + deckOne.toString());
+		if(this.deckOne.isEmpty()) {
+			if(this.debug) System.out.println("Deck Two has succeeded in war: " + this.deckTwo.toString());
+		} else if(this.deckTwo.isEmpty()) {
+			if(this.debug) System.out.println("Deck One has succeeded in war: " + this.deckOne.toString());
 		} else {
 			throw new RuntimeException();
 		}

@@ -3,7 +3,7 @@ package cards.api;
 public class Card {
 	
 	// TODO cache
-	public static Card getCard(CardType type, CardSuit suit) {
+	public static Card forCard(CardType type, CardSuit suit) {
 		return new Card(type, suit);
 	}
 	
